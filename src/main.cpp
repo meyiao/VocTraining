@@ -28,7 +28,7 @@ int main() {
     vector<vector<Mat> > features;
     for (size_t i=0; i<images.size(); i+=1) {
         cout << i << endl;
-        Mat im = imread("../train_data/"+images[i], CV_LOAD_IMAGE_GRAYSCALE);
+        Mat im = imread("../train_data/"+images[i], cv::IMREAD_GRAYSCALE);
         vector<KeyPoint> keys;
         Mat desc;
         orb(im, Mat(), keys, desc);

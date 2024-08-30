@@ -6,14 +6,14 @@ project(DBoW2)
 
 set(HDRS_DBOW2
   DBoW2/BowVector.h
-  DBoW2/FORB.h 
-  DBoW2/FClass.h       
+  DBoW2/FORB.h
   DBoW2/FeatureVector.h
   DBoW2/ScoringObject.h   
   DBoW2/TemplatedVocabulary.h)
 set(SRCS_DBOW2
   DBoW2/BowVector.cpp
-  DBoW2/FORB.cpp      
+  DBoW2/FORB.cpp
+  DBow2/FXFeat.cpp
   DBoW2/FeatureVector.cpp
   DBoW2/ScoringObject.cpp)
 
@@ -26,9 +26,9 @@ set(SRCS_DUTILS
 
 find_package(OpenCV REQUIRED)
 
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+#set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
-add_library(DBoW2 SHARED ${SRCS_DBOW2} ${SRCS_DUTILS})
+add_library(DBoW2 ${SRCS_DBOW2} ${SRCS_DUTILS})
 target_link_libraries(DBoW2 ${OpenCV_LIBS})
 

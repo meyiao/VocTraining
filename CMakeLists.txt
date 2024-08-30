@@ -7,22 +7,31 @@ find_package(OpenCV REQUIRED)
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
+${CMAKE_CURRENT_SOURCE_DIR}/DBoW2
 )
+
+add_subdirectory(DBoW2)
 
 set(LIBS
         ${OpenCV_LIBS}
-        ${PROJECT_SOURCE_DIR}/DBoW2/lib/libDBoW2.so
+        DBoW2
     )
+
+set(SRCs src/ORBVocabulary.h
+        src/utils.h src/utils.cpp
+        src/ORBextractor.h src/ORBextractor.cc)
 
 add_executable(VocTraining
         src/main.cpp
-        src/ORBVocabulary.h
-        src/utils.h src/utils.cpp
-        src/ORBextractor.h src/ORBextractor.cc
+        ${SRCs}
         )
-
 target_link_libraries(VocTraining ${LIBS})
 
+add_executable(LoopDetectDemo
+        src/LoopDetectDemo.cpp
+        ${SRCs}
+)
+target_link_libraries(LoopDetectDemo ${LIBS})
 
 
 
