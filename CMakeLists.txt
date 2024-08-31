@@ -17,21 +17,16 @@ set(LIBS
         DBoW2
     )
 
-set(SRCs src/ORBVocabulary.h
-        src/utils.h src/utils.cpp
-        src/ORBextractor.h src/ORBextractor.cc)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-add_executable(VocTraining
-        src/main.cpp
-        ${SRCs}
-        )
-target_link_libraries(VocTraining ${LIBS})
-
-add_executable(LoopDetectDemo
-        src/LoopDetectDemo.cpp
-        ${SRCs}
+file(GLOB_RECURSE SRCs
+        src/*.cc
+        src/*.h
+        src/*.cpp
+        src/*.hpp
 )
-target_link_libraries(LoopDetectDemo ${LIBS})
+
+add_subdirectory(SAMPLES)
 
 
 

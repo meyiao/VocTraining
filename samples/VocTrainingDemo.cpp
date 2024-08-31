@@ -19,8 +19,9 @@ const int L = 5;
 int main() {
 
     // load images
+    const std::string dataDir = "../../train_data";
     vector<string> images;
-    Utils::LoadImages("../train_data/images.txt", images);
+    Utils::LoadImages(dataDir + "/images.txt", images);
 
     // create features
     cout << "creating features..." << endl;
@@ -28,7 +29,7 @@ int main() {
     vector<vector<Mat> > features;
     for (size_t i=0; i<images.size(); i+=1) {
         cout << i << endl;
-        Mat im = imread("../train_data/"+images[i], cv::IMREAD_GRAYSCALE);
+        Mat im = imread(dataDir + "/" +images[i], cv::IMREAD_GRAYSCALE);
         vector<KeyPoint> keys;
         Mat desc;
         orb(im, Mat(), keys, desc);
@@ -38,7 +39,7 @@ int main() {
             continue;
         }
 
-        features.push_back(vector<cv::Mat>());
+        features.emplace_back();
         Utils::ChangeStructure(desc, features.back());
 
 #if DEBUG_SHOW

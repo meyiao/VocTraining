@@ -911,9 +911,9 @@ void TemplatedVocabulary<TDescriptor,F>::initiateClustersKMpp(
       }
       
       if(dit == min_dists.end()) 
-        ifeature = pfeatures.size()-1;
+        ifeature = static_cast<int>(pfeatures.size())-1;
       else
-        ifeature = dit - min_dists.begin();
+        ifeature = int(dit - min_dists.begin());
       
       clusters.push_back(*pfeatures[ifeature]);
 
@@ -943,7 +943,7 @@ void TemplatedVocabulary<TDescriptor,F>::createWords()
     {
       if(nit->isLeaf())
       {
-        nit->word_id = m_words.size();
+        nit->word_id = static_cast<WordId>(m_words.size());
         m_words.push_back( &(*nit) );
       }
     }
@@ -1481,20 +1481,20 @@ bool TemplatedVocabulary<TDescriptor,F>::loadFromBinaryFile(const std::string &f
   m_nodes.clear();
   m_nodes.resize(nb_nodes+1);
   m_nodes[0].id = 0;
-  char buf[size_node]; int nid = 1;
+  std::vector<char> buf(size_node); int nid = 1;
   while (!f.eof()) {
-    f.read(buf, size_node);
+    f.read(buf.data(), size_node);
     m_nodes[nid].id = nid;
     // FIXME
-    const int* ptr=(int*)buf;
+    const int* ptr=(int*)buf.data();
     m_nodes[nid].parent = *ptr;
     //m_nodes[nid].parent = *(const int*)buf;
     m_nodes[m_nodes[nid].parent].children.push_back(nid);
     m_nodes[nid].descriptor = cv::Mat(1, F::L, CV_8U);
-    memcpy(m_nodes[nid].descriptor.data, buf+4, F::L);
-    m_nodes[nid].weight = *(float*)(buf+4+F::L);
+    memcpy(m_nodes[nid].descriptor.data, buf.data()+4, F::L);
+    m_nodes[nid].weight = *(float*)(buf.data()+4+F::L);
     if (buf[8+F::L]) { // is leaf
-      int wid = m_words.size();
+      int wid = static_cast<int>(m_words.size());
       m_words.resize(wid+1);
       m_nodes[nid].word_id = wid;
       m_words[wid] = &m_nodes[nid];
