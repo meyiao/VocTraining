@@ -7,6 +7,7 @@ project(DBoW2)
 set(HDRS_DBOW2
   DBoW2/BowVector.h
   DBoW2/FORB.h
+  DBoW2/FXFeat.h
   DBoW2/FeatureVector.h
   DBoW2/ScoringObject.h   
   DBoW2/TemplatedVocabulary.h)
